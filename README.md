@@ -57,3 +57,25 @@ None of these are required, but they may be helpful.
 * [Project 5 Overview WebCast](https://github.com/udacity/fend-office-hours/tree/master/Javascript%20Design%20Patterns/P5%20Project%20Overview)
 * [Knockout JS Tutorials](http://learn.knockoutjs.com/)
 * [Todo MVC Knockout Example](http://todomvc.com/examples/knockoutjs/)
+
+## A Note About Plagiarism
+Please take a second to review this section of the Udacity Honor Code (which you agree to whenever you submit a project):
+
+> I hereby confirm that all project submissions consist of my own work. Accordingly, I will document and cite the origins of any part(s) of my project submissions that were taken from websites, books, forums, blog posts, github repositories, or any other source and explain why I used them for any part of my submission. Acceptable sources consist of:
+
+> * Un/modified code from the Udacity courses
+> * A modest amount of un/modified code from third-party sources with attribution
+> * NOT ACCEPTABLE: any part of another student’s work, even with attribution
+
+Neighborhood Map is a difficult project - that's on purpose. You'll be starting with a blank slate and will be designing the architecture of your app entirely on your own.
+
+**PLEASE** don't copy work from other students. We will find out and we will ask you to do the project again. If you do get stuck, here are some tips for how to seek out inspiration without violating the Honor Code:
+
+* Look at documentation and online tutorials **FIRST**.
+* If you do look at another student's work for inspiration (on GitHub or elsewhere), **don't copy it**. Don't take any part of it and don't download it. Review it to understand their thought process.
+* Reflect on their design choices - what are some of the tradeoffs of different decisions in their code?
+* Take a break, if need be, as you figure out how you will implement your app. You have to write your own code so understanding one implementation of it but taking the time to think through your own implementation is extremely important for your own learning and in producing original work.
+* Return to your code and write **your own** implementation.
+* Cite any submissions you looked at to give credit where it is due.
+
+These steps will help you better understand how to review others' submissions without copying and getting flagged for plagiarism. We are invested in your learning and will celebrate your successes with you.

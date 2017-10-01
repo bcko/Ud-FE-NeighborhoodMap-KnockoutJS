@@ -79,3 +79,21 @@ Neighborhood Map is a difficult project - that's on purpose. You'll be starting 
 * Cite any submissions you looked at to give credit where it is due.
 
 These steps will help you better understand how to review others' submissions without copying and getting flagged for plagiarism. We are invested in your learning and will celebrate your successes with you.
+
+## Project Submission
+You will develop a single-page application featuring a map of your neighborhood or a neighborhood you would like to visit. You will then add additional functionality to this application, including: map markers to identify popular locations or places you’d like to visit, a search function to easily discover these locations, and a listview to support simple browsing of all locations. You will then research and implement third-party APIs that provide additional information about each of these locations (such as StreetView images, Wikipedia articles, Yelp reviews, etc).
+
+### Evaluation
+Your project will be evaluated by a Udacity reviewer according to the [Neighborhood Map Project Rubric](https://review.udacity.com/#!/projects/2711658591/rubric). Be sure to review it thoroughly before you submit. All criteria must "meet specifications" in order to pass.
+
+### Submission
+1. If build tools (such as Gulp or Grunt) are used, submit both your source and production code in the same repository in separate directories. These directories are usually named `src` and `dist` respectively.
+2. If build tools are used the gulp or grunt.js file as well as the package.json file must be included in the submission.
+3. If build tools are used, the instructions for building the project and running the tool must be included in the README.md. You may find the short [Writing READMEs course](https://www.udacity.com/course/writing-readmes--ud777) helpful.
+4. The node_modules directory may contain thousands of files and should not be contained in the submission. See the forum post [how to remove node_modules directory from Github repository](https://discussions.udacity.com/t/how-to-remove-node-modules-directory-from-github-respository/40929) for instructions.
+5. The master branch is the default Github repository branch. If you wish to submit another branch, you'll need to set it as the [new default branch](https://help.github.com/articles/setting-the-default-branch/) inside your Github repository.
+6. When you're ready to submit your project go back to your [Udacity Home](https://www.udacity.com/me), click on Project 5.1, and we'll walk you through the rest of the submission process. Due to the high volume of submissions we receive, please allow up up to **7 business days** for your evaluation to be returned.
+7. If you are having any problems submitting your project or wish to check on the status of your submission, please email us at **frontend-project@udacity.com** or visit us in the [discussion forums](http://discussions.udacity.com/).
+
+### What's Next?
+You will get an email as soon as your reviewer has feedback for you. In the meantime, review your next project and feel free to get started on it or the courses supporting it!

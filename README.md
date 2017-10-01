@@ -44,6 +44,7 @@ The list of locations should be filterable with a text input or dropdown menu. F
 
 
 ![The web app should be mobile responsive - notice the hamburger menu icon used to hide the list on small screens (this is just one possible mobile implementation).](http://i.imgur.com/Dj2sWt7.png)
+
 The web app should be mobile responsive - notice the hamburger menu icon used to hide the list on small screens (this is just one possible mobile implementation).
 
 ### Helpful Resources

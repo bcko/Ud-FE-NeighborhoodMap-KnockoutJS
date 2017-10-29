@@ -43,7 +43,8 @@ Object.freeze(locations)
 let map;
 function initMap() {
 	map = new google.maps.Map(document.getElementById('map'), {
-	  center: {lat: 40.7754483, lng: -73.9641723},
-	  zoom: 14
+	  // ann arbor
+	  center: {lat: 42.2806678, lng: -83.7376554},
+	  zoom: 16
 	});
 }

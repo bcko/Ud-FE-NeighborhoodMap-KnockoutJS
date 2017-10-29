@@ -1,9 +1,12 @@
 /* Always set the map height explicitly to define the size of the div
- * element that contains the map. */
+ * element that contains the map. 
+https://developers.google.com/maps/documentation/javascript/tutorial
+*/
 #map {
   height: 100%;
 }
-/* Optional: Makes the sample page fill the window. */
+/* Optional: Makes the sample page fill the window. 
+https://developers.google.com/maps/documentation/javascript/tutorial*/
 html, body {
   height: 100%;
   margin: 0;

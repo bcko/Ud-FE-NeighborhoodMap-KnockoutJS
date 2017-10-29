@@ -7,7 +7,8 @@ Third, strict mode prohibits some syntax likely to be defined in future versions
 "use strict";
 
 
-// location lattitude and longitude retrieved from google maps
+// location lattitude and longitude retrieved from google maps (don't forget to visit these restaurants if you ever visit Ann Arbor)
+// I love const
 const locations = [
 {
 	name: "Sadako Japanese Restaurant",
@@ -35,12 +36,14 @@ const locations = [
 	lng: -83.7471031,
 },
 ] 
-
+// I love immutability
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze
 // prevents new properties from being added to it; prevents existing properties from being removed; and prevents existing properties, or their enumerability, configurability, or writability, from being changed
 Object.freeze(locations)
 
 let map;
+
+// https://developers.google.com/maps/documentation/javascript/tutorial
 function initMap() {
 	map = new google.maps.Map(document.getElementById('map'), {
 	  // ann arbor

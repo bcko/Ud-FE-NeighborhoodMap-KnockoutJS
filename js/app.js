@@ -8,7 +8,7 @@ Third, strict mode prohibits some syntax likely to be defined in future versions
 
 
 // location lattitude and longitude retrieved from google maps (don't forget to visit these restaurants if you ever visit Ann Arbor)
-const RestaurantLocations = [
+const restaurants = [
 {
 	name: "Sadako Japanese Restaurant",
 	lat: 42.2766225,
@@ -37,15 +37,33 @@ const RestaurantLocations = [
 ] 
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze
 // prevents new properties from being added to it; prevents existing properties from being removed; and prevents existing properties, or their enumerability, configurability, or writability, from being changed
-Object.freeze(locations)
+Object.freeze(restaurants)
 
-let map;
+
 
 // https://developers.google.com/maps/documentation/javascript/tutorial
 function initMap() {
-	map = new google.maps.Map(document.getElementById('map'), {
-	  // ann arbor
+	let map = new google.maps.Map(document.getElementById('map'), {
 	  center: {lat: 42.2806678, lng: -83.7376554},
-	  zoom: 16
+	  zoom: 16,
 	});
+
+	initMarkers(map);
+
+}
+
+
+// Add markers to the map
+function initMarkers(map) {
+	
+	// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of
+	// The for...of statement creates a loop iterating over iterable objects (including Array, Map, Set, String, TypedArray, arguments object and so on), invoking a custom iteration hook with statements to be executed for the value of each distinct property
+	for (const restaurant of restaurants) {
+		const marker = new google.maps.Marker({
+			map: map,
+			position: {lat: restaurant.lat, lng: restaurant.lng},
+			title: restaurant.name,
+		});
+	}
+
 }

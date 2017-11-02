@@ -6,7 +6,7 @@ class Venue {
 		this.lat = venueJSON.venue.location.lat;
 		this.lng = venueJSON.venue.location.lng;
 		this.phone = venueJSON.venue.contact.phone;
-		
+
 		this.marker = this.setMarker();
 	}
 	setMarker() {
@@ -14,6 +14,9 @@ class Venue {
 			position: {lat: this.lat , lng: this.lng},
 			title: this.name,
 		});
+	}
+	getInfoWindowContent() {
+		
 	}
 }
 

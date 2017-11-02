@@ -7,6 +7,7 @@
 * [Google Maps Javascript API](https://developers.google.com/maps/documentation/javascript/)
 * [Maps Javascript API Error Messages](https://developers.google.com/maps/documentation/javascript/error-messages)
 * [Google Maps APIs : Web : Maps Javascript API : Markers](https://developers.google.com/maps/documentation/javascript/markers)
+* [Google Maps APIs : Web : Maps Javascript API : Info Windows](https://developers.google.com/maps/documentation/javascript/infowindows)
 * [Foursquare Places API](https://developer.foursquare.com/places-api)
 
 

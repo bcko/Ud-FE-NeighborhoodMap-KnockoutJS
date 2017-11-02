@@ -1,24 +1,47 @@
-FoursquareAPI = {
-	venue_recommendation : 'https://api.foursquare.com/v2/venues/explore',
-	client_id : 'YDZIVXV0U0ZE3WEJKTXTV3QMTS2KR0JJ11DLPLG3J4QA002D',
-	client_secret : 'YGNIWZJE1TWNVZEHFML1322S4PA5BWBIQWZLIIAOYIQ3QKMX',
-	v : '20170801', // version number
+class Venue {
+	constructor(venueJSON) {
+		this.name = venueJSON.venue.name;
+		this.rating = venueJSON.venue.rating;
+		this.url = venueJSON.venue.url;
+		this.lat = venueJSON.venue.location.lat;
+		this.lng = venueJSON.venue.location.lng;
+		this.phone = venueJSON.venue.contact.phone;
+		this.marker;
+	}
+	setMarker(marker) {
+		this.marker = marker;
+	}
 }
-Object.freeze(FoursquareAPI);
 
+class FoursquareAPI {
+	constructor() {
+		this.client_id = 'YDZIVXV0U0ZE3WEJKTXTV3QMTS2KR0JJ11DLPLG3J4QA002D';
+		this.client_secret = 'YGNIWZJE1TWNVZEHFML1322S4PA5BWBIQWZLIIAOYIQ3QKMX';
+		this.v = '20170801';
+	}
 
-let venues;
-// fetch api is awesome!
-// https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
-// https://developer.foursquare.com/docs/api/venues/explore
-fetch(`${FoursquareAPI.venue_recommendation}?client_id=${FoursquareAPI.client_id}&client_secret=${FoursquareAPI.client_secret}&v=${FoursquareAPI.v}&near=Ann Arbor, MI`)
-	.then((response) => {
-		return response.json();
-	}).then((recJSON)=> {
-		venues = recJSON.response.groups[0].items;
-	});
-		
+	getVenueRecommendation() {
+		const exploreAPI = 'https://api.foursquare.com/v2/venues/explore';
+		const near = 'Ann Arbor, MI';
+		const venueRecommendationRequestURL = `${exploreAPI}?client_id=${this.client_id}&client_secret=${this.client_secret}&v=${this.v}&near=${near}`;
+		const venues = [];
+		// https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
+		// https://developer.foursquare.com/docs/api/venues/explore
+		fetch(venueRecommendationRequestURL)
+			.then((response) => {
+				return response.json();
+			}).then((recJSON) => {
+				for (const venue of recJSON.response.groups[0].items) {
+					venues.push(new Venue(venue));
+				}
+			});
+		return venues;
+	}
 
+}
+
+const foursquareAPI = new FoursquareAPI();
+const venues = foursquareAPI.getVenueRecommendation();
 
 // https://developers.google.com/maps/documentation/javascript/tutorial
 function initMap() {
@@ -30,6 +53,12 @@ function initMap() {
 	  disableDefaultUI: true,
 	});
 
+	for (let i=0; i<venues.length; i++) {
+		console.log(venues[i]);
+	}
+
+	//initMarkers(map);
+
 }
 
 
@@ -39,19 +68,21 @@ const VenueViewModel = function() {
 };
 
 
-/*
+
 // Add markers to the map
 function initMarkers(map) {
 	"use strict";
+	
+	console.log('hello');
 	// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of
 	// The for...of statement creates a loop iterating over iterable objects (including Array, Map, Set, String, TypedArray, arguments object and so on), invoking a custom iteration hook with statements to be executed for the value of each distinct property
-	for (const restaurant of restaurants) {
-		const marker = new google.maps.Marker({
+	for (const venue in venues) {
+		console.log(venues);
+		venue.marker = new google.maps.Marker({
 			map: map,
-			position: {lat: restaurant.lat, lng: restaurant.lng},
-			title: restaurant.name,
+			position: {lat: venue.lat, lng: venue.lng},
+			title: venue.name,
 		});
 	}
 
 }
-*/

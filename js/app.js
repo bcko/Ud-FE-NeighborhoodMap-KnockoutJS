@@ -25,7 +25,7 @@ class Venue {
 				website: ${this.url} </br>
 				phone number: ${this.phone} </br>
 			</p>
-		`
+		`;
 
 		return new google.maps.InfoWindow({content:contentString});
 

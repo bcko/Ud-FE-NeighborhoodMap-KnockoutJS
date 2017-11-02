@@ -8,6 +8,7 @@ class Venue {
 		this.phone = venueJSON.venue.contact.phone;
 
 		this.marker = this.setMarker();
+		this.infoWindow = this.getInfoWindowContent();
 	}
 	setMarker() {
 		return new google.maps.Marker({ 
@@ -16,7 +17,13 @@ class Venue {
 		});
 	}
 	getInfoWindowContent() {
-		
+
+		const contentString = `
+			<h1> ${this.name} </h1> 
+		`
+
+		return new google.maps.InfoWindow({content:contentString});
+
 	}
 }
 
@@ -67,9 +74,10 @@ async function initMap() {
 	const foursquareAPI = new FoursquareAPI();
 	let venues = await foursquareAPI.getVenueRecommendation();
 
-	// now we have map declared, we can put markers on the map.
+	// now we have map declared, we can put markers and infowindow on the map.
 	for (const venue of venues) {
 		venue.marker.setMap(map);
+		venue.marker.addListener('click', () => venue.infoWindow.open(map, venue.marker));
 	}
 }
 

@@ -25,23 +25,28 @@ class FoursquareAPI {
 		const near = 'Ann Arbor, MI';
 		const venueRecommendationRequestURL = `${exploreAPI}?client_id=${this.client_id}&client_secret=${this.client_secret}&v=${this.v}&near=${near}`;
 		const venues = [];
+		this.fetchVenues(venues, venueRecommendationRequestURL)
+		return venues;
+		
+	}
+	async fetchVenues(venues, venueRecommendationRequestURL) {
 		// https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
 		// https://developer.foursquare.com/docs/api/venues/explore
-		fetch(venueRecommendationRequestURL)
-			.then((response) => {
-				return response.json();
-			}).then((recJSON) => {
+		return fetch(venueRecommendationRequestURL)
+			.then(response => response.json())
+			.then((recJSON) => {
 				for (const venue of recJSON.response.groups[0].items) {
 					venues.push(new Venue(venue));
 				}
 			});
-		return venues;
 	}
 
 }
 
 const foursquareAPI = new FoursquareAPI();
 const venues = foursquareAPI.getVenueRecommendation();
+console.log(venues[1]);
+initMap();
 
 // https://developers.google.com/maps/documentation/javascript/tutorial
 function initMap() {
@@ -52,9 +57,8 @@ function initMap() {
 	  zoom: 16,
 	  disableDefaultUI: true,
 	});
-
-	for (let i=0; i<venues.length; i++) {
-		console.log(venues[i]);
+	for (const venue of venues) {
+		console.log(venue);
 	}
 
 	//initMarkers(map);

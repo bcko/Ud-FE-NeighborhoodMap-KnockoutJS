@@ -20,6 +20,11 @@ class Venue {
 
 		const contentString = `
 			<h1> ${this.name} </h1> 
+			<p>
+				rating: ${this.rating} </br>
+				website: ${this.url} </br>
+				phone number: ${this.phone} </br>
+			</p>
 		`
 
 		return new google.maps.InfoWindow({content:contentString});

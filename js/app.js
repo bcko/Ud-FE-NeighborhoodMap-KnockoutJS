@@ -6,10 +6,14 @@ class Venue {
 		this.lat = venueJSON.venue.location.lat;
 		this.lng = venueJSON.venue.location.lng;
 		this.phone = venueJSON.venue.contact.phone;
-		this.marker;
+		
+		this.marker = this.setMarker();
 	}
-	setMarker(marker) {
-		this.marker = marker;
+	setMarker() {
+		return new google.maps.Marker({ 
+			position: {lat: this.lat , lng: this.lng},
+			title: this.name,
+		});
 	}
 }
 
@@ -24,32 +28,32 @@ class FoursquareAPI {
 		const exploreAPI = 'https://api.foursquare.com/v2/venues/explore';
 		const near = 'Ann Arbor, MI';
 		const venueRecommendationRequestURL = `${exploreAPI}?client_id=${this.client_id}&client_secret=${this.client_secret}&v=${this.v}&near=${near}`;
-		const venues = [];
-		this.fetchVenues(venues, venueRecommendationRequestURL)
+		const venues = this.fetchVenues(venueRecommendationRequestURL);
 		return venues;
 		
 	}
-	async fetchVenues(venues, venueRecommendationRequestURL) {
+
+	// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function
+	async fetchVenues(venueRecommendationRequestURL) {
 		// https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
 		// https://developer.foursquare.com/docs/api/venues/explore
-		return fetch(venueRecommendationRequestURL)
-			.then(response => response.json())
-			.then((recJSON) => {
-				for (const venue of recJSON.response.groups[0].items) {
-					venues.push(new Venue(venue));
-				}
-			});
-	}
+		
+		let response = await fetch(venueRecommendationRequestURL);
+		let json = await response.json();
+		let venues = [];
 
+		for (const venue of json.response.groups[0].items) {
+			venues.push(new Venue(venue));
+		}
+		return venues;
+	}
 }
 
-const foursquareAPI = new FoursquareAPI();
-const venues = foursquareAPI.getVenueRecommendation();
-console.log(venues[1]);
-initMap();
+
+
 
 // https://developers.google.com/maps/documentation/javascript/tutorial
-function initMap() {
+async function initMap() {
 	"use strict";
 	let map = new google.maps.Map(document.getElementById('map'), {
 		// ann arbor, MI
@@ -57,12 +61,13 @@ function initMap() {
 	  zoom: 16,
 	  disableDefaultUI: true,
 	});
+	const foursquareAPI = new FoursquareAPI();
+	let venues = await foursquareAPI.getVenueRecommendation();
+
+	// now we have map declared, we can put markers on the map.
 	for (const venue of venues) {
-		console.log(venue);
+		venue.marker.setMap(map);
 	}
-
-	//initMarkers(map);
-
 }
 
 
@@ -71,22 +76,3 @@ const VenueViewModel = function() {
 
 };
 
-
-
-// Add markers to the map
-function initMarkers(map) {
-	"use strict";
-	
-	console.log('hello');
-	// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of
-	// The for...of statement creates a loop iterating over iterable objects (including Array, Map, Set, String, TypedArray, arguments object and so on), invoking a custom iteration hook with statements to be executed for the value of each distinct property
-	for (const venue in venues) {
-		console.log(venues);
-		venue.marker = new google.maps.Marker({
-			map: map,
-			position: {lat: venue.lat, lng: venue.lng},
-			title: venue.name,
-		});
-	}
-
-}

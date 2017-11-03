@@ -33,6 +33,20 @@ class Venue {
 }
 
 class FoursquareAPI {
+	// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function
+	async fetchVenues(venueRecommendationRequestURL) {
+		// https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
+		// https://developer.foursquare.com/docs/api/venues/explore
+		let response = await fetch(venueRecommendationRequestURL);
+		let json = await response.json();
+		let venues = [];
+
+		for (const venue of json.response.groups[0].items) {
+			venues.push(new Venue(venue));
+		}
+		return venues;
+	}
+
 	constructor() {
 		this.client_id = 'YDZIVXV0U0ZE3WEJKTXTV3QMTS2KR0JJ11DLPLG3J4QA002D';
 		this.client_secret = 'YGNIWZJE1TWNVZEHFML1322S4PA5BWBIQWZLIIAOYIQ3QKMX';
@@ -47,19 +61,6 @@ class FoursquareAPI {
 		return venues;
 	}
 
-	// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function
-	async fetchVenues(venueRecommendationRequestURL) {
-		// https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
-		// https://developer.foursquare.com/docs/api/venues/explore
-		let response = await fetch(venueRecommendationRequestURL);
-		let json = await response.json();
-		let venues = [];
-
-		for (const venue of json.response.groups[0].items) {
-			venues.push(new Venue(venue));
-		}
-		return venues;
-	}
 }
 
 

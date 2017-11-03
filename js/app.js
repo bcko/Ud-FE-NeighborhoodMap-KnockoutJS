@@ -45,14 +45,12 @@ class FoursquareAPI {
 		const venueRecommendationRequestURL = `${exploreAPI}?client_id=${this.client_id}&client_secret=${this.client_secret}&v=${this.v}&near=${near}`;
 		const venues = this.fetchVenues(venueRecommendationRequestURL);
 		return venues;
-		
 	}
 
 	// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function
 	async fetchVenues(venueRecommendationRequestURL) {
 		// https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
 		// https://developer.foursquare.com/docs/api/venues/explore
-		
 		let response = await fetch(venueRecommendationRequestURL);
 		let json = await response.json();
 		let venues = [];

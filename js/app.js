@@ -97,5 +97,3 @@ const VenueViewModel = function() {
 
 
 };
-
-initMap();

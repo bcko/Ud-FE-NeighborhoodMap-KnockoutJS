@@ -31,14 +31,14 @@ class Venue {
 
 	}
 }
-
+/*
 class FoursquareAPI {
 	// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function
-	async fetchVenues(venueRecommendationRequestURL) {
+	fetchVenues(venueRecommendationRequestURL) {
 		// https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
 		// https://developer.foursquare.com/docs/api/venues/explore
-		let response = await fetch(venueRecommendationRequestURL);
-		let json = await response.json();
+		let response = fetch(venueRecommendationRequestURL);
+		let json = response.json();
 		let venues = [];
 
 		for (const venue of json.response.groups[0].items) {
@@ -62,7 +62,7 @@ class FoursquareAPI {
 	}
 
 }
-
+*/
 
 
 
@@ -75,14 +75,18 @@ async function initMap() {
 	  zoom: 16,
 	  disableDefaultUI: true,
 	});
-	const foursquareAPI = new FoursquareAPI();
-	let venues = await foursquareAPI.getVenueRecommendation();
+
+	let response = await fetch("hello");
+	//const foursquareAPI = new FoursquareAPI();
+	//let venues = foursquareAPI.getVenueRecommendation();
 
 	// now we have map declared, we can put markers and infowindow on the map.
+	/*
 	for (const venue of venues) {
 		venue.marker.setMap(map);
 		venue.marker.addListener('click', () => venue.infoWindow.open(map, venue.marker));
 	}
+	*/
 }
 
 
@@ -91,3 +95,4 @@ const VenueViewModel = function() {
 
 };
 
+initMap();

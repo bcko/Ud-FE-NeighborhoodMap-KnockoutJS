@@ -5,10 +5,23 @@
     <meta name="viewport" content="initial-scale=1.0">
     <meta charset="utf-8">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css">
+    
+    <!-- material components css styles from https://material.io -->
+    <link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css">
+    
     <link rel="stylesheet" href="css/style.css">
+
+    <!-- material components javascript from https://material.io -->
+    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+  
+    <!-- material.js is used to instantiate material components from https://material.io.  
+        So it has to be executed after parsing document  -->    
+    <script defer src="js/material.js"></script>     
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD0N6hmESWIo8Bk0xX88F8BQgUK3xCf3u0"></script>
+    <script async defer src="js/app.js"></script>    
+    
   </head>
   <body class="mdc-typography">
     <header class="mdc-toolbar">
@@ -19,21 +32,27 @@
         </section>
       </div>
     </header>
+    
+    <!-- side drawer -->    
+    <aside class="mdc-temporary-drawer mdc-typography">
+      <nav class="mdc-temporary-drawer__drawer">
+        <header class="mdc-temporary-drawer__header">
+          <div class="mdc-temporary-drawer__header-content">
+            Ann Arbor Venues
+          </div>
+        </header>
+        <nav data-bind="foreach: venue" id="icon-with-text-demo" class="mdc-temporary-drawer__content mdc-list" >
+          <a class="mdc-list-item mdc-temporary-drawer--selected" href="#">
+            <i class="material-icons mdc-list-item__start-detail" aria-hidden="true">store</i> 
+            <span data-bind="text: name"> </span>
+          </a>
+        </nav>
+      </nav>
+    </aside>
 
 
     <div id="map"></div>
-
-    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
-    
-    <!-- https://material.io -->
-    <script>
-      window.mdc.autoInit();
-      //let drawer = new mdc.drawer.MDCTemporaryDrawer(document.querySelector('.mdc-temporary-drawer'));
-      document.querySelector('.mdc-toolbar__menu-icon').addEventListener('click', () => drawer.open = true);
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
-    <script src="js/app.js"></script>    
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD0N6hmESWIo8Bk0xX88F8BQgUK3xCf3u0&callback=initMap"></script>
-    
   </body>
+
+
 </html>

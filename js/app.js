@@ -1,3 +1,4 @@
+     
 class Venue {
 	constructor(venueJSON) {
 		this.name = venueJSON.venue.name;
@@ -6,70 +7,53 @@ class Venue {
 		this.lat = venueJSON.venue.location.lat;
 		this.lng = venueJSON.venue.location.lng;
 		this.phone = venueJSON.venue.contact.phone;
-
-		this.marker = this.setMarker();
-		this.infoWindow = this.getInfoWindowContent();
-	}
-	setMarker() {
-		return new google.maps.Marker({ 
-			position: {lat: this.lat , lng: this.lng},
-			title: this.name,
-		});
-	}
-	getInfoWindowContent() {
-
-		const contentString = `
-			<h1> ${this.name} </h1> 
-			<p>
-				rating: ${this.rating} </br>
-				website: ${this.url} </br>
-				phone number: ${this.phone} </br>
-			</p>
-		`;
-
-		return new google.maps.InfoWindow({content:contentString});
-
 	}
 }
 
-class FoursquareAPI {
-	// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function
-	async fetchVenues(venueRecommendationRequestURL) {
-		// https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
-		// https://developer.foursquare.com/docs/api/venues/explore
-		let response = await fetch(venueRecommendationRequestURL);
-		let json = await response.json();
-		let venues = [];
+async function retrieveVenuesFromFoursquareAPI() {
+	const client_id = 'YDZIVXV0U0ZE3WEJKTXTV3QMTS2KR0JJ11DLPLG3J4QA002D';
+	const client_secret = 'YGNIWZJE1TWNVZEHFML1322S4PA5BWBIQWZLIIAOYIQ3QKMX';
+	const api_version = '20170801';
+	
+	// https://developer.foursquare.com/docs/api/venues/explore
+	const exploreAPI = 'https://api.foursquare.com/v2/venues/explore';
+	const nearCity = 'Ann Arbor, MI';
+	const venueRecommendationRequestURL = `${exploreAPI}?client_id=${client_id}&client_secret=${client_secret}&v=${api_version}&near=${nearCity}`;
 
-		for (const venue of json.response.groups[0].items) {
-			venues.push(new Venue(venue));
-		}
-		return venues;
+	let response = await fetch(venueRecommendationRequestURL);
+	let json = await response.json();
+	
+	let venues = [];
+	for (const venue of json.response.groups[0].items) {
+		venues.push(new Venue(venue));
 	}
+	return venues;
+}
 
-	constructor() {
-		this.client_id = 'YDZIVXV0U0ZE3WEJKTXTV3QMTS2KR0JJ11DLPLG3J4QA002D';
-		this.client_secret = 'YGNIWZJE1TWNVZEHFML1322S4PA5BWBIQWZLIIAOYIQ3QKMX';
-		this.v = '20170801';
-	}
+async function main() {
+	venues = await retrieveVenuesFromFoursquareAPI();
+	console.log(venues);
 
-	getVenueRecommendation() {
-		const exploreAPI = 'https://api.foursquare.com/v2/venues/explore';
-		const near = 'Ann Arbor, MI';
-		const venueRecommendationRequestURL = `${exploreAPI}?client_id=${this.client_id}&client_secret=${this.client_secret}&v=${this.v}&near=${near}`;
-		const venues = this.fetchVenues(venueRecommendationRequestURL);
-		return venues;
-	}
+ 	// Activates knockout.js
+        ko.applyBindings({
+          venue: [
+            {name: 'hello'},
+            {name: 'hi'},
+          ]
+
+        });
+
 
 }
 
+main()
+
+
+class GoogleMap {
+
+
+}
 /*
-async function fetchVenuesFromFoursquare() {
-
-}
-*/
-
-
 // https://developers.google.com/maps/documentation/javascript/tutorial
 async function initMap() {
 	"use strict";
@@ -91,9 +75,6 @@ async function initMap() {
 	}
 	
 }
+*/
 
 
-const VenueViewModel = function() {
-
-
-};

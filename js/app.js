@@ -35,13 +35,7 @@ async function main() {
 	console.log(venues);
 
  	// Activates knockout.js
-        ko.applyBindings({
-          venue: [
-            {name: 'hello'},
-            {name: 'hi'},
-          ]
-
-        });
+        ko.applyBindings(venues);
 
 
 }

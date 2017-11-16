@@ -6,6 +6,7 @@ class Venue {
 		this.url = venueJSON.venue.url;
 		this.lat = venueJSON.venue.location.lat;
 		this.lng = venueJSON.venue.location.lng;
+		this.location = venueJSON.venue.location;
 		this.phone = venueJSON.venue.contact.phone;
 	}
 }
@@ -30,45 +31,46 @@ async function retrieveVenuesFromFoursquareAPI() {
 	return venues;
 }
 
+
+
+class GoogleMap {
+	constructor() {
+		this.map = new google.maps.Map(document.getElementById('map'), {
+					// ann arbor, MI
+				  center: {lat: 42.2806678, lng: -83.7376554},
+				  zoom: 16,
+				  disableDefaultUI: true,
+				});
+		this.marker = [];
+		//this.infoWindow = new google.maps.infoWindow();
+	}
+
+	setMarker(venue) {
+		//console.log(venue);
+		let marker = new google.maps.Marker({
+			position: venue.location,
+			title: venue.name,
+			map: this.map
+		});
+		//marker.addListener();
+		this.marker.push(marker);
+	}
+
+}
+
+
 async function main() {
 	venues = await retrieveVenuesFromFoursquareAPI();
 	console.log(venues);
-
  	// Activates knockout.js
-        ko.applyBindings(venues);
+    ko.applyBindings(venues);
 
+    googleMap = new GoogleMap();
+
+    for (const venue of venues) {
+    	googleMap.setMarker(venue);
+    }
 
 }
 
 main()
-
-
-class GoogleMap {
-
-
-}
-/*
-// https://developers.google.com/maps/documentation/javascript/tutorial
-async function initMap() {
-	"use strict";
-	let map = new google.maps.Map(document.getElementById('map'), {
-		// ann arbor, MI
-	  center: {lat: 42.2806678, lng: -83.7376554},
-	  zoom: 16,
-	  disableDefaultUI: true,
-	});
-
-	const foursquareAPI = new FoursquareAPI();
-	let venues = await foursquareAPI.getVenueRecommendation();
-
-	// now we have map declared, we can put markers and infowindow on the map.
-	
-	for (const venue of venues) {
-		venue.marker.setMap(map);
-		venue.marker.addListener('click', () => venue.infoWindow.open(map, venue.marker));
-	}
-	
-}
-*/
-
-

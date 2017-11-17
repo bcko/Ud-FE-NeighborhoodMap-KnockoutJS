@@ -107,6 +107,21 @@ class DrawerUI {
 	}
 }
 
+// https://material.io/components/web/catalog/snackbars/
+class SanckbarUI {
+	constructor() {
+		this.snackbar = new MDCSnackbar(document.querySelector('.mdc-snackbar'));
+	}
+	showSnackbar(message) {
+		const dataObj = {
+			message: message,
+			actionText: 'Dismiss',
+		};
+		this.snackbar.show(dataObj);
+	}
+}
+
+
 // Knockout.js ViewModel
 function VenueViewModel(venues) {
 	"use strict";

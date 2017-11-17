@@ -75,7 +75,7 @@ class GoogleMap {
 
 		// adding marker bounce
 		marker.addListener('click', () => {
-			marker.setAnimation(google.maps.Animation.BOUNCE)
+			marker.setAnimation(google.maps.Animation.BOUNCE);
 			// bounce stops after 1 second
 	    	setTimeout(() => marker.setAnimation(null), 1000); 
 		});		
@@ -131,7 +131,7 @@ function VenueViewModel(venues) {
 	self.openInfoWindow = function(venue) {
 		self.drawerUI.closeDrawer();
 		google.maps.event.trigger(venue.marker, 'click');
-	}
+	};
 
 	// input received from search UI
 	self.filterInput = ko.observable('');
@@ -149,7 +149,7 @@ function VenueViewModel(venues) {
 				venue.marker.setMap(null);
 			}
 		}
-	}
+	};
 }
 
 
@@ -165,7 +165,7 @@ function retrieveVenuesFromFoursquareAPI2() {
 	const venueRecommendationRequestURL = `${exploreAPI}?client_id=${client_id}&client_secret=${client_secret}&v=${api_version}&near=${nearCity}`;
 
 	return fetch(venueRecommendationRequestURL).then((response) => { return response.json(); 
-	}).then((json) => json.response.groups[0].items)
+	}).then((json) => json.response.groups[0].items);
 }
 
 function main() {
@@ -182,6 +182,6 @@ function main() {
 			venues.push(new Venue(venueJSON));
 		}
 		ko.applyBindings(new VenueViewModel(venues));
-    })
+    });
 }
-main()
+main();

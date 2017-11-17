@@ -21,6 +21,7 @@ class Venue {
 	}
 }
 
+/*
 // asynchronously retrieve venues from foursquare exploreAPI
 async function retrieveVenuesFromFoursquareAPI() {
 	const client_id = 'YDZIVXV0U0ZE3WEJKTXTV3QMTS2KR0JJ11DLPLG3J4QA002D';
@@ -40,6 +41,33 @@ async function retrieveVenuesFromFoursquareAPI() {
 		venues.push(new Venue(venue));
 	}
 	return venues;
+}
+*/
+
+class FoursquareAPI {
+	constructor() {
+		// do nothing
+	}
+
+	async retrieveVenues() {
+		const client_id = 'YDZIVXV0U0ZE3WEJKTXTV3QMTS2KR0JJ11DLPLG3J4QA002D';
+		const client_secret = 'YGNIWZJE1TWNVZEHFML1322S4PA5BWBIQWZLIIAOYIQ3QKMX';
+		const api_version = '20170801';
+		
+		// https://developer.foursquare.com/docs/api/venues/explore
+		const exploreAPI = 'https://api.foursquare.com/v2/venues/explore';
+		const nearCity = 'Ann Arbor, MI';
+		const venueRecommendationRequestURL = `${exploreAPI}?client_id=${client_id}&client_secret=${client_secret}&v=${api_version}&near=${nearCity}`;
+
+		let response = await fetch(venueRecommendationRequestURL);
+		let json = await response.json();
+		
+		let venues = [];
+		for (const venue of json.response.groups[0].items) {
+			venues.push(new Venue(venue));
+		}
+		return venues;
+	}
 }
 
 // GoogleMap class has all objects and methods related to google map.
@@ -154,13 +182,15 @@ function VenueViewModel(venues) {
 
 
 async function main() {
-
+	"use strict";
 	// autoinitialize all material UI components
 	// https://material.io/components/web/catalog/auto-init/
 	window.mdc.autoInit();
 
 	// retrieves 30 venue recommendations from Foursquare API
-	venues = await retrieveVenuesFromFoursquareAPI();
+	//venues = await retrieveVenuesFromFoursquareAPI();
+	const foursquareAPI = new FoursquareAPI();
+	const venues = await foursquareAPI.retrieveVenues();
 
  	// Activates knockout.js
     ko.applyBindings(new VenueViewModel(venues));

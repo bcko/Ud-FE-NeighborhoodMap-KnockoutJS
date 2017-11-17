@@ -77,7 +77,7 @@ class GoogleMap {
 		marker.addListener('click', () => {
 			marker.setAnimation(google.maps.Animation.BOUNCE);
 			// bounce stops after 1 second
-	    	setTimeout(() => marker.setAnimation(null), 1000); 
+	    	setTimeout(() => marker.setAnimation(null), 1400); 
 		});		
 
 		// attach infowindow

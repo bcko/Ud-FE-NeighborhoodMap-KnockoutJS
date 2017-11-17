@@ -22,8 +22,10 @@ class Venue {
 }
 
 
+
 // I cannot use this because Udacity system doesn't recognize async/await. 
 // asynchronously retrieve venues from foursquare exploreAPI
+/*
 async function retrieveVenuesFromFoursquareAPI() {
 	const client_id = 'YDZIVXV0U0ZE3WEJKTXTV3QMTS2KR0JJ11DLPLG3J4QA002D';
 	const client_secret = 'YGNIWZJE1TWNVZEHFML1322S4PA5BWBIQWZLIIAOYIQ3QKMX';
@@ -43,6 +45,9 @@ async function retrieveVenuesFromFoursquareAPI() {
 	}
 	return venues;
 }
+*/
+
+
 
 // GoogleMap class has all objects and methods related to google map.
 class GoogleMap {
@@ -122,7 +127,7 @@ function VenueViewModel(venues) {
 	// initialize drawerUI class
 	self.drawerUI = new DrawerUI();
 
-
+	// In drawer UI, when a venue is clicked, it will close the drawer and open the venue's infowindow.
 	self.openInfoWindow = function(venue) {
 		self.drawerUI.closeDrawer();
 		google.maps.event.trigger(venue.marker, 'click');
@@ -132,13 +137,13 @@ function VenueViewModel(venues) {
 	self.filterInput = ko.observable('');
 
 	self.filterLocations = function() {
+		// remove all visible Venues
 		self.visibleVenues.removeAll();
 
 		for (let venue of self.venues) {
-			const targetName = venue.name.toLowerCase();
-			if (targetName.includes(self.filterInput().toLowerCase())) {
+			// check to see if venue's name contains filterinput 
+			if (venue.name.toLowerCase().includes(self.filterInput().toLowerCase())) {
 				self.visibleVenues.push(venue);
-				console.log(venue.marker);
 				venue.marker.setMap(self.googleMap.map);
 			} else {
 				venue.marker.setMap(null);
@@ -148,17 +153,35 @@ function VenueViewModel(venues) {
 }
 
 
-async function main() {
+
+function retrieveVenuesFromFoursquareAPI2() {
+	const client_id = 'YDZIVXV0U0ZE3WEJKTXTV3QMTS2KR0JJ11DLPLG3J4QA002D';
+	const client_secret = 'YGNIWZJE1TWNVZEHFML1322S4PA5BWBIQWZLIIAOYIQ3QKMX';
+	const api_version = '20170801';
+	
+	// https://developer.foursquare.com/docs/api/venues/explore
+	const exploreAPI = 'https://api.foursquare.com/v2/venues/explore';
+	const nearCity = 'Ann Arbor, MI';
+	const venueRecommendationRequestURL = `${exploreAPI}?client_id=${client_id}&client_secret=${client_secret}&v=${api_version}&near=${nearCity}`;
+
+	return fetch(venueRecommendationRequestURL).then((response) => { return response.json(); 
+	}).then((json) => json.response.groups[0].items)
+}
+
+function main() {
 	"use strict";
 	// autoinitialize all material UI components
 	// https://material.io/components/web/catalog/auto-init/
 	window.mdc.autoInit();
 
 	// retrieves 30 venue recommendations from Foursquare API
-	const venues = await retrieveVenuesFromFoursquareAPI();
-
- 	// Activates knockout.js
-    ko.applyBindings(new VenueViewModel(venues));
-
+    retrieveVenuesFromFoursquareAPI2()
+    .then((venuesJSON) => {
+    	let venues = [];
+    	for (const venueJSON of venuesJSON) {
+			venues.push(new Venue(venueJSON));
+		}
+		ko.applyBindings(new VenueViewModel(venues));
+    })
 }
 main()

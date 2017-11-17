@@ -22,6 +22,7 @@ class Venue {
 }
 
 
+// I cannot use this because Udacity system doesn't recognize async/await. 
 // asynchronously retrieve venues from foursquare exploreAPI
 async function retrieveVenuesFromFoursquareAPI() {
 	const client_id = 'YDZIVXV0U0ZE3WEJKTXTV3QMTS2KR0JJ11DLPLG3J4QA002D';
@@ -108,49 +109,42 @@ function VenueViewModel(venues) {
 	let self = this;
 
 	self.googleMap = new GoogleMap();
+	 // we want to show all venues in the beginning
+	self.visibleVenues = ko.observableArray([]);
 
-    self.venues = ko.observableArray(venues);
-    self.venues().forEach((venue) => {
+    self.venues = venues;
+    for (const venue of self.venues) {
+    	self.visibleVenues.push(venue);
     	venue.marker = self.googleMap.setMarker(venue);
-    })
 
-    // we want to show all venues in the beginning
-	self.visibleVenues = ko.observableArray(venues);
+    }
 
 	// initialize drawerUI class
 	self.drawerUI = new DrawerUI();
+
 
 	self.openInfoWindow = function(venue) {
 		self.drawerUI.closeDrawer();
 		google.maps.event.trigger(venue.marker, 'click');
 	}
 
-
+	// input received from search UI
 	self.filterInput = ko.observable('');
 
 	self.filterLocations = function() {
-		const input = self.filterInput().toLowerCase();
-
 		self.visibleVenues.removeAll();
 
-		self.venues().forEach((venue) => { 
-			const venueName = venue.name.toLowerCase();
-			console.log(venueName);
-			venue.marker.setVisible(false);
-			
-			/*
-			if (venueName.includes(input)) {
-				console.log("hello");
+		for (let venue of self.venues) {
+			const targetName = venue.name.toLowerCase();
+			if (targetName.includes(self.filterInput().toLowerCase())) {
 				self.visibleVenues.push(venue);
-				self.venue.setVisible(true);
+				console.log(venue.marker);
+				venue.marker.setMap(self.googleMap.map);
+			} else {
+				venue.marker.setMap(null);
 			}
-			*/
-
-		});
+		}
 	}
-
-
-
 }
 
 

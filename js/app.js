@@ -13,7 +13,6 @@ class Venue {
 		this.infoWindowContent = `<h1> ${this.name} </h1>
 				<p>
 					rating : ${this.rating} </br>
-					website : ${this.url} </br>
 					phone number: ${this.phone} </br>
 					retrieved from Foursquare
 				</p>
@@ -76,7 +75,7 @@ class GoogleMap {
 		// adding marker bounce
 		marker.addListener('click', () => {
 			marker.setAnimation(google.maps.Animation.BOUNCE);
-			// bounce stops after 1 second
+			// bounce stops after 1.4 second
 	    	setTimeout(() => marker.setAnimation(null), 1400); 
 		});		
 

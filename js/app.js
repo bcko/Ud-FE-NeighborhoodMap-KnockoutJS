@@ -152,8 +152,6 @@ function VenueViewModel(venues) {
 	};
 }
 
-
-
 function retrieveVenuesFromFoursquareAPI2() {
 	const client_id = 'YDZIVXV0U0ZE3WEJKTXTV3QMTS2KR0JJ11DLPLG3J4QA002D';
 	const client_secret = 'YGNIWZJE1TWNVZEHFML1322S4PA5BWBIQWZLIIAOYIQ3QKMX';
@@ -168,7 +166,7 @@ function retrieveVenuesFromFoursquareAPI2() {
 	}).then((json) => json.response.groups[0].items);
 }
 
-function main() {
+function initMap() {
 	"use strict";
 	// autoinitialize all material UI components
 	// https://material.io/components/web/catalog/auto-init/
@@ -184,4 +182,3 @@ function main() {
 		ko.applyBindings(new VenueViewModel(venues));
     });
 }
-main();

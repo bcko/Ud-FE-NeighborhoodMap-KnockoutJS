@@ -82,16 +82,14 @@ class GoogleMap {
 		this.markers.push(marker);
 	}
 
-	// Clicking on the marker will toggle the animation between a BOUNCE animation and no animation.
-	// https://developers.google.com/maps/documentation/javascript/markers#animate	
-	markerToggleBounce(marker) {
-		if (marker.getAnimation() !== null) {
-   			marker.setAnimation(null);
-  		} else {
-    		marker.setAnimation(google.maps.Animation.BOUNCE);
-  		}
+	addMarkerBounce() {
+		for (let marker of this.markers) {
+			marker.addListener('click', () => {
+				marker.setAnimation(google.maps.Animation.BOUNCE)
+		    	setTimeout(() => marker.setAnimation(null), 1000);
+			} );
+		}
 	}
-
 
 }
 
@@ -125,8 +123,11 @@ function VenueViewModel(venues, googleMap) {
 	// initialize drawerUI class
 	self.drawerUI = new DrawerUI();
 
+
+	self.filterInput = ko.observable('');
+
 	self.filterLocations = function() {
-		
+
 	}
 
 
@@ -158,6 +159,7 @@ async function main() {
     	venue.marker = googleMap.setMarker(venue);
 
     }
+    googleMap.addMarkerBounce();
 
  	// Activates knockout.js
     ko.applyBindings(new VenueViewModel(venues, googleMap));

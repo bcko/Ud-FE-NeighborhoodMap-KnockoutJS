@@ -14,10 +14,6 @@
     <!-- material components javascript from https://material.io -->
     <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
   
-    <!-- material.js is used to instantiate material components from https://material.io.  
-        So it has to be executed after parsing document  -->    
-    <script defer src="js/material.js"></script>     
-  
     <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD0N6hmESWIo8Bk0xX88F8BQgUK3xCf3u0"></script>
     <script defer src="js/app.js"></script>    
@@ -40,12 +36,16 @@
       <nav class="mdc-temporary-drawer__drawer">
         <header class="mdc-temporary-drawer__header">
           <div class="mdc-temporary-drawer__header-content">
-            Ann Arbor Venues
+            <div class="mdc-text-field">
+              <input type="text" id="my-text-field" class="mdc-text-field__input">
+              <label class="mdc-text-field__label" for="my-text-field">Filter Venues</label>
+              <div class="mdc-text-field__bottom-line"></div>
+            </div>
           </div>
         </header>
         <!-- side drawer items -->
         <nav data-bind="foreach: venues" id="icon-with-text-demo" class="mdc-temporary-drawer__content mdc-list" >
-          <a class="mdc-list-item mdc-temporary-drawer--selected" href="#">
+          <a data-bind="click: $parent.openInfoWindow" class="mdc-list-item mdc-temporary-drawer--selected">
             <i class="material-icons mdc-list-item__start-detail" aria-hidden="true">store</i> 
             <span data-bind="text: name"> </span>
           </a>

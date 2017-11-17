@@ -166,6 +166,11 @@ function retrieveVenuesFromFoursquareAPI2() {
 	}).then((json) => json.response.groups[0].items);
 }
 
+// https://discussions.udacity.com/t/handling-google-maps-in-async-and-fallback/34282
+function googleMapLoadError() {
+
+}
+
 function initMap() {
 	"use strict";
 	// autoinitialize all material UI components

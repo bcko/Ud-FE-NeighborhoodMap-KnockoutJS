@@ -113,11 +113,16 @@ function VenueViewModel(venues) {
     	venue.marker = self.googleMap.setMarker(venue);
     })
 
-
+    // we want to show all venues in the beginning
 	self.visibleVenues = ko.observableArray(venues);
 
 	// initialize drawerUI class
 	self.drawerUI = new DrawerUI();
+
+	self.openInfoWindow = function(venue) {
+		self.drawerUI.closeDrawer();
+		google.maps.event.trigger(venue.marker, 'click');
+	}
 
 
 	self.filterInput = ko.observable('');
@@ -127,7 +132,7 @@ function VenueViewModel(venues) {
 
 		self.visibleVenues.removeAll();
 
-		self.venues().forEach(function(venue) { 
+		self.venues().forEach((venue) => { 
 			const venueName = venue.name.toLowerCase();
 			console.log(venueName);
 			venue.marker.setVisible(false);
@@ -144,15 +149,6 @@ function VenueViewModel(venues) {
 	}
 
 
-	
-
-
-
-
-	self.openInfoWindow = function(venue) {
-		self.drawerUI.closeDrawer();
-		google.maps.event.trigger(venue.marker, 'click');
-	}
 
 }
 
@@ -163,17 +159,8 @@ async function main() {
 	// https://material.io/components/web/catalog/auto-init/
 	window.mdc.autoInit();
 
-
 	// retrieves 30 venue recommendations from Foursquare API
 	venues = await retrieveVenuesFromFoursquareAPI();
-
-	//googleMap = new GoogleMap();
-/*
-	for (let venue of venues) {
-    	venue.marker = googleMap.setMarker(venue);
-
-    }
-    */
 
  	// Activates knockout.js
     ko.applyBindings(new VenueViewModel(venues));

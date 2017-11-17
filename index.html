@@ -38,17 +38,16 @@
           <div class="mdc-temporary-drawer__header-content">
             <div class="mdc-text-field mdc-text-field--box mdc-text-field--with-leading-icon">
               <i class="material-icons mdc-text-field__icon" tabindex="0">search</i>
-              <input type="text" id="my-input" class="mdc-text-field__input">
-              <label for="my-input" class="mdc-text-field__label">Search Venues</label>
+              <input data-bind="textInput: filterInput, event: {keyup: filterLocations}" type="text" id="my-input" class="mdc-text-field__input">
               <div class="mdc-text-field__bottom-line"></div>
             </div>
           </div>
         </header>
         <!-- side drawer items -->
-        <nav data-bind="foreach: venues" id="icon-with-text-demo" class="mdc-temporary-drawer__content mdc-list" >
+        <nav data-bind="foreach: visibleVenues" id="icon-with-text-demo" class="mdc-temporary-drawer__content mdc-list" >
           <a data-bind="click: $parent.openInfoWindow" class="mdc-list-item mdc-temporary-drawer--selected">
             <i class="material-icons mdc-list-item__start-detail" aria-hidden="true">store</i> 
-            <span data-bind="text: name"> </span>
+            <span data-bind="text: name, click: $parent.openInfoWindow"> </span>
           </a>
         </nav>
       </nav>

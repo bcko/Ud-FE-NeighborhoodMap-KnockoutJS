@@ -1,12 +1,3 @@
-/*  Overview
- * 
- *
- *
- */
-
-
-
-
 // Venue class is used to store relevant data retrieved from Foursquare API     
 class Venue {
 	constructor(venueJSON) {
@@ -19,7 +10,7 @@ class Venue {
 		this.phone = venueJSON.venue.contact.phone;
 
 		this.marker; // will be set later
-		this.infoWindowContent = `<h1> this.name </h1>
+		this.infoWindowContent = `<h1> ${this.name} </h1>
 				<p>
 					rating : ${this.rating} </br>
 					website : ${this.url} </br>
@@ -27,7 +18,6 @@ class Venue {
 					retrieved from Foursquare
 				</p>
 		`;
-
 	}
 }
 
@@ -52,8 +42,6 @@ async function retrieveVenuesFromFoursquareAPI() {
 	return venues;
 }
 
-
-
 // GoogleMap class has all objects and methods related to google map.
 class GoogleMap {
 	// initializes google map, marker array, and infoWindow
@@ -61,11 +49,9 @@ class GoogleMap {
 		this.map = new google.maps.Map(document.getElementById('map'), {
 					// ann arbor, MI
 				  center: {lat: 42.2806678, lng: -83.7376554},
-				  zoom: 16,
+				  zoom: 14,
 				  disableDefaultUI: true,
 				});
-		// stores array of markers
-		this.markers = [];
 		// https://developers.google.com/maps/documentation/javascript/infowindows
 		//  If you only need one info window at a time, you can create just one InfoWindow object and open it at different locations or markers upon map events, such as user clicks.
 		this.infoWindow = new google.maps.InfoWindow({});
@@ -79,17 +65,24 @@ class GoogleMap {
 			animation: google.maps.Animation.DROP, 
 			map: this.map,
 		});
-		this.markers.push(marker);
+
+		// adding marker bounce
+		marker.addListener('click', () => {
+			marker.setAnimation(google.maps.Animation.BOUNCE)
+			// bounce stops after 1 second
+	    	setTimeout(() => marker.setAnimation(null), 1000); 
+		});		
+
+		// attach infowindow
+		marker.addListener('click', () => {
+			this.infoWindow.open(this.map, marker);
+			this.infoWindow.setContent(venue.infoWindowContent);
+			this.map.setCenter(venue.location);
+		});
+
+		return marker;
 	}
 
-	addMarkerBounce() {
-		for (let marker of this.markers) {
-			marker.addListener('click', () => {
-				marker.setAnimation(google.maps.Animation.BOUNCE)
-		    	setTimeout(() => marker.setAnimation(null), 1000);
-			} );
-		}
-	}
 
 }
 
@@ -109,16 +102,19 @@ class DrawerUI {
 }
 
 // Knockout.js ViewModel
-function VenueViewModel(venues, googleMap) {
+function VenueViewModel(venues) {
 	"use strict";
 	let self = this;
 
-	self.googleMap = googleMap;
+	self.googleMap = new GoogleMap();
 
-	
+    self.venues = ko.observableArray(venues);
+    self.venues().forEach((venue) => {
+    	venue.marker = self.googleMap.setMarker(venue);
+    })
 
-	// Non-editable venue data, it is coming from foursquare API request
-	self.venues = ko.observableArray(venues);
+
+	self.visibleVenues = ko.observableArray(venues);
 
 	// initialize drawerUI class
 	self.drawerUI = new DrawerUI();
@@ -127,7 +123,24 @@ function VenueViewModel(venues, googleMap) {
 	self.filterInput = ko.observable('');
 
 	self.filterLocations = function() {
+		const input = self.filterInput().toLowerCase();
 
+		self.visibleVenues.removeAll();
+
+		self.venues().forEach(function(venue) { 
+			const venueName = venue.name.toLowerCase();
+			console.log(venueName);
+			venue.marker.setVisible(false);
+			
+			/*
+			if (venueName.includes(input)) {
+				console.log("hello");
+				self.visibleVenues.push(venue);
+				self.venue.setVisible(true);
+			}
+			*/
+
+		});
 	}
 
 
@@ -136,8 +149,9 @@ function VenueViewModel(venues, googleMap) {
 
 
 
-	self.openInfoWindow = function() {
+	self.openInfoWindow = function(venue) {
 		self.drawerUI.closeDrawer();
+		google.maps.event.trigger(venue.marker, 'click');
 	}
 
 }
@@ -153,16 +167,16 @@ async function main() {
 	// retrieves 30 venue recommendations from Foursquare API
 	venues = await retrieveVenuesFromFoursquareAPI();
 
-	googleMap = new GoogleMap();
-
+	//googleMap = new GoogleMap();
+/*
 	for (let venue of venues) {
     	venue.marker = googleMap.setMarker(venue);
 
     }
-    googleMap.addMarkerBounce();
+    */
 
  	// Activates knockout.js
-    ko.applyBindings(new VenueViewModel(venues, googleMap));
+    ko.applyBindings(new VenueViewModel(venues));
 
 }
 main()

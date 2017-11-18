@@ -112,7 +112,7 @@ class SanckbarUI {
 	constructor() {
 		this.snackbar = new MDCSnackbar(document.querySelector('.mdc-snackbar'));
 	}
-	showSnackbar(message) {
+	showMessage(message) {
 		const dataObj = {
 			message: message,
 			actionText: 'Dismiss',
@@ -177,12 +177,14 @@ function retrieveVenuesFromFoursquareAPI2() {
 	const venueRecommendationRequestURL = `${exploreAPI}?client_id=${client_id}&client_secret=${client_secret}&v=${api_version}&near=${nearCity}`;
 
 	return fetch(venueRecommendationRequestURL).then((response) => { return response.json(); 
-	}).then((json) => json.response.groups[0].items);
+	}).then((json) => json.response.groups[0].items).catch( () => window.alert("failed to fetch venues from Foursquare"));
 }
 
 // https://discussions.udacity.com/t/handling-google-maps-in-async-and-fallback/34282
 function googleMapLoadError() {
-
+	//snackbar = new SnackbarUI()
+	//snackbar.showMessage("google map failed to load");
+	window.alert("google map failed to load");
 }
 
 function initMap() {

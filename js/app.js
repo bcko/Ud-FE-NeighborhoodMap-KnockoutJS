@@ -201,5 +201,5 @@ function initMap() {
 			venues.push(new Venue(venueJSON));
 		}
 		ko.applyBindings(new VenueViewModel(venues));
-    });
+    }).catch(() => window.alert("failed to load venues"));
 }

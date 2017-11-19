@@ -4,16 +4,23 @@ class Venue {
 		this.name = venueJSON.venue.name;
 		this.rating = venueJSON.venue.rating;
 		this.url = venueJSON.venue.url;
+		if (this.url === undefined) {
+			this.url = "no website";
+		}
 		this.lat = venueJSON.venue.location.lat;
 		this.lng = venueJSON.venue.location.lng;
 		this.location = venueJSON.venue.location;
 		this.phone = venueJSON.venue.contact.phone;
+		if (this.phone === undefined) {
+			this.phone = "no phone number";
+		}
 
 		this.marker; // will be set later
 		this.infoWindowContent = `<h1> ${this.name} </h1>
 				<p>
 					rating : ${this.rating} </br>
 					phone number: ${this.phone} </br>
+					website: ${this.url} </br>
 					retrieved from Foursquare
 				</p>
 		`;

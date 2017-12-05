@@ -1,6 +1,6 @@
 ## [Project Description](Project_Description.md)
 
-## Project Specification
+## [Project Specification](Project_Specification.md)
 
 
 ## Demo

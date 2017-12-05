@@ -1,7 +1,11 @@
+## Project Description
 
-# References
+## Project Specification
 
-## API
+
+## References
+
+### API
 
 * [Google Maps APIs](https://developers.google.com/maps/)
 * [Google Maps Javascript API](https://developers.google.com/maps/documentation/javascript/)
@@ -11,7 +15,7 @@
 * [Foursquare Places API](https://developer.foursquare.com/places-api)
 
 
-## Javascript
+### Javascript
 
 * [KnockoutJS](http://knockoutjs.com/)
 * [MDN : strict mode](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode)
@@ -21,13 +25,13 @@
 * [CSS-Tricks : Using Fetch](https://css-tricks.com/using-fetch/)
 
 
-### async/await
+#### async/await
 * [MDN : Async function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function)
 * [Synchronous fetch with async/await](https://dev.to/johnpaulada/synchronous-fetch-with-asyncawait)
 * [David Walsh : async & await](https://davidwalsh.name/async-await)
 * [Async functions - making promises friendly](https://developers.google.com/web/fundamentals/primers/async-functions)
 
-## CSS
+### CSS
 
 * [Material Components for the Web](https://material.io/components/web/)
 * [Material Design Lite](https://getmdl.io)
